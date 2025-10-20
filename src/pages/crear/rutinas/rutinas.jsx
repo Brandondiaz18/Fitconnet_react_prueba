@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/rutinas.css"; // Ajusta la ruta según tu estructura
+import "./rutinas.css"; // Ajusta la ruta según tu estructura
 
 const Rutinas = () => {
   return (
@@ -12,7 +12,7 @@ const Rutinas = () => {
         </div>
         <nav>
           <ul>
-            <li><a href="/index.html">Inicio</a></li>
+            <li><a href="/">Inicio</a></li>
             <li><a href="#">Nuestros Servicios</a></li>
             <li><a href="#">Nuestros Planes</a></li>
             <li><a href="#">Contacto</a></li>

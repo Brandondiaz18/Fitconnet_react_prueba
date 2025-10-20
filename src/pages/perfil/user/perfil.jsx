@@ -1,28 +1,31 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./perfil.css";
 
 export default function Perfil() {
+  const navigate = useNavigate();
+
   // Función para editar perfil
   const editProfile = () => {
-    alert("Redirigiendo a editar perfil...");
-    // window.location.href = '/editar_perfil';
+    navigate("/editar_perfil");
   };
 
   // Función para ir al perfil
   const goToProfile = () => {
-    window.location.reload();
+    navigate("/perfil");
   };
 
   // Función para ir al inicio
   const goToHome = () => {
-    window.location.href = "/principal/user";
+    navigate("/");
   };
 
   // Cerrar sesión
   const logout = () => {
-    if (confirm("¿Estás seguro que deseas cerrar sesión?")) {
+    if (window.confirm("¿Estás seguro que deseas cerrar sesión?")) {
+      localStorage.removeItem("token");
       alert("Sesión cerrada correctamente.");
-      window.location.href = "/login";
+      navigate("/login");
     }
   };
 
@@ -52,7 +55,7 @@ export default function Perfil() {
             ☰
           </div>
           {menuOpen && (
-            <div className="menu-content">
+            <div className={`menu-content ${menuOpen ? "open" : ""}`}>
               <a href="#">Mis Entrenamientos</a>
               <a href="#">Mi Plan</a>
               <a href="#">Progreso</a>
@@ -81,7 +84,7 @@ export default function Perfil() {
         <div className="profile-header">
           <div className="profile-photo-container">
             <img
-              src="/img/Profile_user.png"
+              src="/img/perfil.png"
               alt="Foto de perfil"
               className="profile-photo"
             />

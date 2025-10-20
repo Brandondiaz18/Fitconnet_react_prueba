@@ -50,16 +50,16 @@ export default function Calistenia() {
         <nav>
           <ul>
             <li>
-              <a href="../../principal/user/user.html">Inicio</a>
+              <a href="/">Inicio</a>
             </li>
             <li>
-              <a href="../gym/gym.html">Gimnasio</a>
+              <a href="/ejercicios/gym">Gimnasio</a>
             </li>
             <li>
-              <a href="../casa/casa.html">Casa</a>
+              <a href="/ejercicios/casa">Casa</a>
             </li>
             <li>
-              <a href="../calistenia/calistenia.html" className="activo">
+              <a href="/ejercicios/calistenia" className="activo">
                 Calistenia
               </a>
             </li>

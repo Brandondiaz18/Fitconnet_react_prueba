@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import "./Login.css";
+import { useNavigate, Link } from "react-router-dom";
+import "./login.css";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
@@ -19,36 +21,55 @@ export default function Login() {
         throw new Error("Credenciales incorrectas");
       }
       const data = await response.json();
-      // Guarda el token en localStorage
       localStorage.setItem("token", data.access_token);
-      // Redirige al dashboard o página principal
-      window.location.href = "/principal";
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Iniciar sesión</h2>
-        <input
-          type="text"
-          placeholder="Correo"
-          value={correo}
-          onChange={e => setCorreo(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contrasena}
-          onChange={e => setContrasena(e.target.value)}
-          required
-        />
-        <button type="submit">Entrar</button>
-        {error && <p className="error">{error}</p>}
-      </form>
+    <div className="container">
+      <div className="left">
+        <img src="/img/gym.jpeg" alt="Gimnasio" />
+      </div>
+
+      <div className="right">
+        <div className="logo">
+          <img src="/img/logo.png" alt="Logo Fitconnet" />
+          <h1>Fitconnet</h1>
+        </div>
+
+        <div className="login-box">
+          <h2>Login</h2>
+          <form onSubmit={handleSubmit}>
+            <label>Usuario:</label>
+            <input
+              type="text"
+              placeholder="Correo"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              required
+            />
+
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+              required
+            />
+
+            <button type="submit" className="btn">iniciar Sesion</button>
+            {error && <p className="error">{error}</p>}
+          </form>
+
+          <div className="extra-links">
+            <Link to="/register">Crear cuenta</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

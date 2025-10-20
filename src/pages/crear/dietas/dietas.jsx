@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/dietas.css"; // Ajusta la ruta según tu estructura
+import "./dietas.css"; // Ajusta la ruta según tu estructura
 
 const Dietas = () => {
   return (
@@ -10,13 +10,13 @@ const Dietas = () => {
         </div>
         <nav>
           <ul>
-            <li><a href="/index.html">Inicio</a></li>
-            <li><a href="/servicios.html">Nuestros Servicios</a></li>
-            <li><a href="/planes.html">Nuestros Planes</a></li>
-            <li><a href="/contacto.html">Contacto</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/perfil.html">Perfil</a></li>
-            <li><a href="/login.html">Cerrar Sesión</a></li>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="#">Nuestros Servicios</a></li>
+            <li><a href="#">Nuestros Planes</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Chat</a></li>
+            <li><a href="/perfil">Perfil</a></li>
+            <li><a href="/login">Cerrar Sesión</a></li>
           </ul>
         </nav>
       </header>

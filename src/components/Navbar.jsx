@@ -13,8 +13,8 @@ export default function Navbar() {
   const token = localStorage.getItem("token");
 
   return (
-    <nav className="bg-gray-900 text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav className="bg-gray-900 text-white shadow-md w-full">
+      <div className="w-full px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-purple-500">
           FitConnet

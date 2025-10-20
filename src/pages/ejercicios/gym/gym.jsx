@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./gym.css";
 
 export default function Gym() {
+  const navigate = useNavigate();
   const [ejercicios, setEjercicios] = useState([]);
   const [nuevo, setNuevo] = useState({
     nombre: "",
@@ -64,16 +66,16 @@ export default function Gym() {
         <nav>
           <ul>
             <li>
-              <a href="../../principal/user/user.html">Inicio</a>
+              <button onClick={() => navigate("/")}>Inicio</button>
             </li>
             <li>
-              <a href="../../ejercicios/gym/gym.html">Rutinas</a>
+              <button onClick={() => navigate("/ejercicios/gym")}>Rutinas</button>
             </li>
             <li>
-              <a href="../../ejercicios/dietas/dietas.html">Dietas</a>
+              <button onClick={() => navigate("/ejercicios/dietas")}>Dietas</button>
             </li>
             <li>
-              <a href="../../principal/contacto.html">Contacto</a>
+              <button>Contacto</button>
             </li>
           </ul>
         </nav>

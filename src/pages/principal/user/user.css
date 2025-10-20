@@ -366,12 +366,18 @@ section {
     justify-content: space-between;
     background: black;
     color: white;
-    padding: 30px 10%;
+    padding: 30px 5%;
     margin-top: 50px;
+    width: 100%;
+    min-height: 160px;
+    border-top: 4px solid #8000ff;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
 
 .footer-logo {
-    width: 100px;
+    width: 120px;
     margin-right: 10px;
     border-radius: 5px;
 }
@@ -384,4 +390,8 @@ section {
 .footer-content ul {
     list-style: none;
     text-align: left;
+}
+
+.footer-text {
+    flex: 1;
 }

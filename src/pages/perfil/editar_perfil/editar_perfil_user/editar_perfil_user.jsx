@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./editar_perfil_user.css";
 
 const EditarPerfil = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "carlos belcast",
     gender: "masculino",

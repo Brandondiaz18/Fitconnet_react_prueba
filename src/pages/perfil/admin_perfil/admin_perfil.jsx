@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./admin_perfil.css";
 
 const AdminPerfil = () => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = (e) => {
@@ -21,18 +23,18 @@ const AdminPerfil = () => {
   }, []);
 
   const editProfile = () => {
-    alert("Redirigiendo a editar perfil...");
-    // Ejemplo: window.location.href = '/editar-perfil';
+    navigate("/editar_perfil/admin");
   };
 
   const goToProfile = () => {
-    window.location.reload();
+    navigate("/perfil/admin");
   };
 
   const logout = () => {
     if (window.confirm("¿Estás seguro que deseas cerrar sesión?")) {
+      localStorage.removeItem("token");
       alert("Sesión cerrada correctamente.");
-      window.location.href = "/login";
+      navigate("/login");
     }
   };
 
@@ -57,10 +59,10 @@ const AdminPerfil = () => {
         </div>
 
         <nav>
-          <a href="/principal/admin/Admin.html">Inicio</a>
-          <a href="#">Nuestros Servicios</a>
-          <a href="#">Nuestros Planes</a>
-          <a href="#">Contacto</a>
+          <button onClick={() => navigate("/principal/admin")}>Inicio</button>
+          <button>Nuestros Servicios</button>
+          <button>Nuestros Planes</button>
+          <button>Contacto</button>
         </nav>
 
         <div className="actions">
@@ -80,11 +82,11 @@ const AdminPerfil = () => {
       </header>
 
       {/* Contenedor del perfil */}
-      <div className="profile-container">
+      <div className="admin-profile-container">
         {/* Header del perfil */}
         <div className="profile-header">
           <img
-            src="/img/Profile_user.png"
+            src="/img/perfil.png"
             alt="Foto de perfil"
             className="profile-photo"
           />

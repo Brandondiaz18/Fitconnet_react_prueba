@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const token = localStorage.getItem("token");
@@ -9,7 +10,7 @@ export default function Dashboard() {
       {token ? (
         <p>Tu sesión está activa ✅</p>
       ) : (
-        <p>No has iniciado sesión. <a href="/login">Ir a Login</a></p>
+        <p>No has iniciado sesión. <Link to="/login">Ir a Login</Link></p>
       )}
     </div>
   );

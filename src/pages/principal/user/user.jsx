@@ -1,7 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./user.css";
 
 export default function User() {
+  const navigate = useNavigate();
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div>
       {/* Header */}
@@ -9,30 +17,30 @@ export default function User() {
         <div className="menu-container">
           <div className="menu-button">☰</div>
           <div className="menu-content">
-            <a href="#">Nuestros Servicios</a>
-            <a href="#">Aviones</a>
-            <a href="#">Contacto</a>
+            <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("servicios");}}>Nuestros Servicios</a>
+            <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("planes");}}>Nuestros Planes</a>
+            <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("contacto");}}>Contacto</a>
           </div>
         </div>
 
         <img src="/img/logo.png" className="logo" alt="Logo Gimnasio" />
 
         <div className="center-buttons">
-          <button>Inicio</button>
-          <button>Nuestros Servicios</button>
-          <button>Nuestros Planes</button>
-          <button>Contacto</button>
+          <button onClick={() => scrollTo("inicio")}>Inicio</button>
+          <button onClick={() => scrollTo("servicios")}>Nuestros Servicios</button>
+          <button onClick={() => scrollTo("planes")}>Nuestros Planes</button>
+          <button onClick={() => scrollTo("contacto")}>Contacto</button>
         </div>
 
         <div className="right-buttons">
           <button id="chatIA">Chat</button>
-          <button id="perfil">Perfil</button>
-          <button id="cerrarSesion">Cerrar Sesión</button>
+          <button id="perfil" onClick={() => navigate("/perfil")}>Perfil</button>
+          <button id="cerrarSesion" onClick={() => navigate("/login")}>Cerrar Sesión</button>
         </div>
       </header>
 
       {/* Sección 2 */}
-      <section className="section2">
+      <section className="section2" id="inicio">
         <br />
         <br />
         <br />
@@ -43,13 +51,13 @@ export default function User() {
       </section>
 
       {/* Sección 3 - Planes */}
-      <section className="section3">
+      <section className="section3" id="planes">
         <h2>Nuestros Planes</h2>
         <div className="planes-container">
           <div className="plan">
             <img src="/img/plan_1.jpeg" alt="Plan 1" />
             <p>Plan 1 - 1 mes - $50.000</p>
-            <button onClick={() => (window.location.href = "/compras/compras.html")}>
+            <button onClick={() => navigate("/compras")}>
               Comprar
             </button>
           </div>
@@ -57,7 +65,7 @@ export default function User() {
           <div className="plan">
             <img src="/img/plan_2.jpeg" alt="Plan 2" />
             <p>Plan 2 - 6 meses - $275.000</p>
-            <button onClick={() => (window.location.href = "/compras/compras.html")}>
+            <button onClick={() => navigate("/compras")}>
               Comprar
             </button>
           </div>
@@ -65,7 +73,7 @@ export default function User() {
           <div className="plan">
             <img src="/img/plan_3.jpeg" alt="Plan 3" />
             <p>Plan 3 - 1 año - $580.000</p>
-            <button onClick={() => (window.location.href = "/compras/compras.html")}>
+            <button onClick={() => navigate("/compras")}>
               Comprar
             </button>
           </div>
@@ -73,13 +81,13 @@ export default function User() {
       </section>
 
       {/* Sección 4 - Servicios */}
-      <section className="section4">
+      <section className="section4" id="servicios">
         <h2>Nuestros Servicios</h2>
         <div className="carousel">
           <div>
             <img src="/img/casa.jpeg" alt="Ejercicio en casa" />
             <p>Ejercicios en casa</p>
-            <button onClick={() => (window.location.href = "/ejercicios/casa/casa.html")}>
+            <button onClick={() => navigate("/ejercicios/casa")}>
               Ver más
             </button>
           </div>
@@ -87,7 +95,7 @@ export default function User() {
           <div>
             <img src="/img/gym.jpeg" alt="Ejercicio en gym" />
             <p>Ejercicios en gimnasio</p>
-            <button onClick={() => (window.location.href = "/ejercicios/gym/gym.html")}>
+            <button onClick={() => navigate("/ejercicios/gym")}>
               Ver más
             </button>
           </div>
@@ -95,7 +103,7 @@ export default function User() {
           <div>
             <img src="/img/calistenia.jpeg" alt="Calistenia" />
             <p>Calistenia</p>
-            <button onClick={() => (window.location.href = "/ejercicios/calistenia/calistenia.html")}>
+            <button onClick={() => navigate("/ejercicios/calistenia")}>
               Ver más
             </button>
           </div>
@@ -162,7 +170,7 @@ export default function User() {
       </section>
 
       {/* Sección 7 */}
-      <section className="section7">
+      <section className="section7" id="contacto">
         <h2>Contacto</h2>
         <div className="contact-info">
           <p>📧 Correo: contacto@fitconett.com</p>

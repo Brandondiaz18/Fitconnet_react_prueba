@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./casa.css";
 
 export default function Casa() {
+  const navigate = useNavigate();
   const [ejercicios, setEjercicios] = useState([
     {
       nombre: "Flexiones",
@@ -52,32 +54,34 @@ export default function Casa() {
   return (
     <div>
       {/* 🔹 NAVBAR */}
-      <header>
+      <header className="navbar">
         <div className="logo">
-          <img src="../../img/logo-fitconnet.png" alt="Logo FitConnet" />
+          <img src="/img/logo.png" alt="Logo FitConnet" />
           <span>FitConnet</span>
         </div>
 
-        <nav>
-          <ul>
-            <li>
-              <a href="../../principal/user/user.html" className="activo">
-                Inicio
-              </a>
-            </li>
-            <li>
-              <a href="../../principal/ejercicios/gym/gym.html">Gimnasio</a>
-            </li>
-            <li>
-              <a href="../../principal/ejercicios/calistenia/calistenia.html">
-                Calistenia
-              </a>
-            </li>
-            <li>
-              <a href="../../principal/contacto/contacto.html">Contacto</a>
-            </li>
-          </ul>
-        </nav>
+        <div className="nav-links">
+          <a
+            href="/"
+            className="active"
+            onClick={(e) => { e.preventDefault(); navigate("/"); }}
+          >
+            Inicio
+          </a>
+          <a
+            href="/ejercicios/gym"
+            onClick={(e) => { e.preventDefault(); navigate("/ejercicios/gym"); }}
+          >
+            Gimnasio
+          </a>
+          <a
+            href="/ejercicios/calistenia"
+            onClick={(e) => { e.preventDefault(); navigate("/ejercicios/calistenia"); }}
+          >
+            Calistenia
+          </a>
+          <a href="#contacto">Contacto</a>
+        </div>
       </header>
 
       {/* 🔹 CONTENIDO PRINCIPAL */}

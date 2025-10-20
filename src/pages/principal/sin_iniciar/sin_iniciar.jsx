@@ -1,0 +1,146 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./sin_iniciar.css";
+
+const SinIniciar = () => {
+  const navigate = useNavigate();
+
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
+  const goToRegister = () => {
+    navigate("/register");
+  };
+  
+  const goToCompras = () => {
+    navigate("/compras");
+  };
+
+  return (
+    <div style={{width: "100vw", maxWidth: "100%", margin: "0", padding: "0", overflowX: "hidden"}}>
+      {/* HEADER */}
+      <header className="section1" style={{width: "100vw", maxWidth: "100%"}}>
+        <div className="menu-container">
+          <div className="menu-button">☰</div>
+          <div className="menu-content">
+            <button onClick={goToLogin}>Iniciar Sesión</button>
+            <button onClick={goToRegister}>Registrarse</button>
+          </div>
+        </div>
+
+        <img src="/img/logo.png" className="logo" alt="Logo Gimnasio" />
+
+        <div className="center-buttons">
+          <button onClick={goToLogin}>Inicio</button>
+          <button onClick={goToLogin}>Nuestros Servicios</button>
+          <button onClick={goToLogin}>Nuestros Planes</button>
+          <button onClick={goToLogin}>Contacto</button>
+        </div>
+
+        <div className="right-buttons">
+          <button onClick={goToLogin}>Iniciar Sesión</button>
+          <button onClick={goToRegister}>Registrarse</button>
+        </div>
+      </header>
+
+      {/* SECCIÓN 2 */}
+      <section className="section2">
+        <br />
+        <br />
+        <br />
+        <h1>Bienvenido a FitConnet</h1>
+        <br />
+        <br />
+        <img src="/img/Seccion2.png" alt="Gimnasio" />
+      </section>
+
+      {/* SECCIÓN 3 - PLANES */}
+      <section className="section3">
+        <h2>Nuestros Planes</h2>
+        <div className="planes-container">
+          <div className="plan">
+            <img src="/img/plan_1.jpeg" alt="Plan 1" />
+            Plan 1 - 1 mes - $50.000
+            <button onClick={goToCompras}>Comprar</button>
+          </div>
+          <div className="plan">
+            <img src="/img/plan_2.jpeg" alt="Plan 2" />
+            Plan 2 - 6 meses - $275.000
+            <button onClick={goToCompras}>Comprar</button>
+          </div>
+          <div className="plan">
+            <img src="/img/plan_3.jpeg" alt="Plan 3" />
+            Plan 3 - 1 año - $580.000
+            <button onClick={goToCompras}>Comprar</button>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 4 - SERVICIOS */}
+      <section className="section4">
+        <h2>Nuestros Servicios</h2>
+        <div className="carousel">
+          <div>
+            <img src="/img/casa.jpeg" alt="Ejercicio en casa" />
+            Ejercicios en casa
+            <button onClick={goToLogin}>Ver más</button>
+          </div>
+          <div>
+            <img src="/img/gym.jpeg" alt="Ejercicio en gym" />
+            Ejercicios en gimnasio
+            <button onClick={goToLogin}>Ver más</button>
+          </div>
+          <div>
+            <img src="/img/calistenia.jpeg" alt="Calistenia" />
+            Calistenia
+            <button onClick={goToLogin}>Ver más</button>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 5 - PUBLICACIONES */}
+      <section className="section5">
+        <h2>Publicaciones de usuarios</h2>
+        <p>Para ver las publicaciones de usuarios, debes:</p>
+        <br />
+        <button className="login-button" onClick={goToLogin}>
+          Iniciar Sesión
+        </button>
+      </section>
+
+      {/* SECCIÓN 6 */}
+      <section className="section6">
+        Pronto App - Información aleatoria
+      </section>
+
+      {/* SECCIÓN 7 - CONTACTO */}
+      <section className="section7">
+        <h2>Contacto</h2>
+        <div className="contact-info">
+          <p>📧 Correo: contacto@fitconett.com</p>
+          <p>📞 Teléfono: +123 456 7890</p>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="section8">
+        <img src="/img/logo.png" className="footer-logo" alt="Logo del pie de página" />
+        <div className="footer-text">
+          <ul>
+            <li>
+              <strong>Horarios de Atención:</strong>
+            </li>
+            <li>Lunes a Viernes: 6:00 AM - 10:00 PM</li>
+            <li>Sábados y Domingos: 8:00 AM - 6:00 PM</li>
+          </ul>
+          <ul>
+            <li>© 2025 FitConnet - Todos los derechos reservados.</li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default SinIniciar;
