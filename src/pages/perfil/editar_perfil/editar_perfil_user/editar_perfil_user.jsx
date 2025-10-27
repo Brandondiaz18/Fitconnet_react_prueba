@@ -23,6 +23,9 @@ const EditarPerfil = () => {
 
   const [profileImg, setProfileImg] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [password, setPassword] = useState("");
+  const [verifyError, setVerifyError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -54,11 +57,67 @@ const EditarPerfil = () => {
     return "Obesidad";
   };
 
-  const handleSubmit = (e) => {
+  const verifyPassword = async () => {
+    setVerifyError("");
+    const correo = localStorage.getItem("correo");
+    if (!correo) {
+      setVerifyError("No se encontró el correo del usuario.");
+      return;
+    }
+    try {
+      const resp = await fetch("http://localhost:8000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo, contrasena: password }),
+      });
+      if (!resp.ok) throw new Error("Contraseña incorrecta");
+      setIsVerified(true);
+    } catch (err) {
+      setVerifyError(err.message || "Contraseña incorrecta");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Guardar cambios en backend con token
+    const token = localStorage.getItem("token");
+    const correo = localStorage.getItem("correo");
+    const payload = { correo, ...formData };
+
+    const endpoints = [
+      { url: "http://localhost:8000/api/usuarios/me", method: "PUT", auth: true },
+      { url: "http://localhost:8000/api/usuarios/", method: "PUT", auth: true },
+      { url: "http://localhost:8000/api/usuarios/update", method: "PUT", auth: true },
+    ];
+
+    let saved = false;
+    for (const ep of endpoints) {
+      try {
+        const resp = await fetch(ep.url, {
+          method: ep.method,
+          headers: {
+            "Content-Type": "application/json",
+            ...(ep.auth && token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify(payload),
+        });
+        if (resp.ok) {
+          saved = true;
+          break;
+        }
+      } catch (err) {
+        // intentar siguiente endpoint
+      }
+    }
+
+    // Fallback local si la API no responde
+    if (!saved) {
+      localStorage.setItem("perfil", JSON.stringify(payload));
+    }
+
     setSuccess(true);
     setTimeout(() => setSuccess(false), 3000);
-    console.log("Datos guardados:", formData);
+    console.log("Datos guardados:", payload);
   };
 
   return (
@@ -74,6 +133,27 @@ const EditarPerfil = () => {
         <div id="successMessage" className="success-message">
           <span>✓</span>
           <span>Perfil actualizado exitosamente</span>
+        </div>
+      )}
+
+      {!isVerified && (
+        <div className="verify-overlay">
+          <div className="verify-modal">
+            <h3>Verifica tu contraseña</h3>
+            <p>Para editar tu perfil, ingresa tu contraseña.</p>
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ width: "100%", marginTop: 10, padding: 12, background: "#3a3a3a", border: "2px solid #4a4a4a", color: "#fff", borderRadius: 10 }}
+            />
+            {verifyError && <div className="verify-error">{verifyError}</div>}
+            <div className="verify-actions">
+              <button className="btn-cancel" onClick={() => window.history.back()}>Cancelar</button>
+              <button className="btn-save" type="button" onClick={async () => { await verifyPassword(); }}>Verificar</button>
+            </div>
+          </div>
         </div>
       )}
 

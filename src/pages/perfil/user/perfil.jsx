@@ -4,6 +4,38 @@ import "./perfil.css";
 
 export default function Perfil() {
   const navigate = useNavigate();
+  const [user, setUser] = React.useState(null);
+  const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    const correo = localStorage.getItem("correo");
+    const fetchProfile = async () => {
+      try {
+        let data = null;
+        // Intento con endpoint me
+        const respMe = await fetch("http://localhost:8000/api/usuarios/me", {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        if (respMe.ok) data = await respMe.json();
+        // Fallback por correo
+        if (!data && correo) {
+          const respByEmail = await fetch(`http://localhost:8000/api/usuarios/by-email?correo=${encodeURIComponent(correo)}`);
+          if (respByEmail.ok) data = await respByEmail.json();
+        }
+        // Fallback local
+        if (!data) {
+          const local = localStorage.getItem("perfil");
+          if (local) data = JSON.parse(local);
+        }
+        setUser(data);
+      } catch (e) {
+        console.error(e);
+        setError("No fue posible cargar el perfil");
+      }
+    };
+    fetchProfile();
+  }, []);
 
   // Función para editar perfil
   const editProfile = () => {
@@ -19,6 +51,11 @@ export default function Perfil() {
   const goToHome = () => {
     navigate("/");
   };
+
+  // Navegación a secciones del Home
+  const goToServicios = () => navigate("/#servicios");
+  const goToPlanes = () => navigate("/#planes");
+  const goToContacto = () => navigate("/#contacto");
 
   // Cerrar sesión
   const logout = () => {
@@ -67,13 +104,13 @@ export default function Perfil() {
 
         <div className="center-buttons">
           <button onClick={goToHome}>Inicio</button>
-          <button>Nuestros Servicios</button>
-          <button>Nuestros Planes</button>
-          <button>Contacto</button>
+          <button onClick={goToServicios}>Nuestros Servicios</button>
+          <button onClick={goToPlanes}>Nuestros Planes</button>
+          <button onClick={goToContacto}>Contacto</button>
         </div>
 
         <div className="right-buttons">
-          <button onClick={goToProfile}>Perfil</button>
+          {/* Ocultamos el botón Perfil porque ya estamos en Perfil */}
           <button onClick={logout}>Cerrar Sesión</button>
         </div>
       </header>
@@ -93,7 +130,7 @@ export default function Perfil() {
 
           <div className="profile-main-info">
             <h1 className="username">
-              carlosbelcast <span className="verified">✓</span>
+              {(user?.nombre || user?.username || "Usuario")} <span className="verified">✓</span>
             </h1>
             <p className="user-type">Deportista</p>
 
@@ -132,7 +169,7 @@ export default function Perfil() {
           <div className="info-grid">
             <div className="info-item">
               <div className="info-label">Email</div>
-              <div className="info-value">usuario@fitconnet.com</div>
+              <div className="info-value">{user?.correo || "usuario@fitconnet.com"}</div>
             </div>
             <div className="info-item">
               <div className="info-label">Teléfono</div>
