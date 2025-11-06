@@ -23,7 +23,7 @@ export default function Login() {
       const data = await response.json();
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("correo", correo);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }

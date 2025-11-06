@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRouter from './routes/auth.js';
 import usuariosRouter from './routes/usuarios.js';
+import publicacionesRouter from './routes/publicaciones.js';
 
 dotenv.config();
 
@@ -20,12 +21,19 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Ensure DB schema is ready
+import { ensureUsuariosSchema, ensurePublicacionesSchema, ensureSecuritySchema } from './sql/init.js';
+await ensureUsuariosSchema();
+await ensurePublicacionesSchema();
+await ensureSecuritySchema();
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'fitconnet-backend' });
 });
 
 app.use('/api/auth', authRouter);
 app.use('/api/usuarios', usuariosRouter);
+app.use('/api/publicaciones', publicacionesRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend escuchando en http://localhost:${PORT}`);

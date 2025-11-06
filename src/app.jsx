@@ -21,6 +21,7 @@ import Admin from "./pages/principal/admin/Admin.jsx";
 import SinIniciar from "./pages/principal/sin_iniciar/sin_iniciar.jsx";
 import EditarPerfil from "./pages/perfil/editar_perfil/editar_perfil_user/editar_perfil_user.jsx";
 import EditarPerfilAdmin from "./pages/perfil/editar_perfil/editar_perfil_admin/editar_perfil_admin.jsx";
+import PublicacionDetalle from "./pages/publicaciones/detalle.jsx";
 
 // Función para proteger rutas (solo accesibles si el usuario está logueado)
 const PrivateRoute = ({ children }) => {
@@ -60,6 +61,7 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/perfil/admin" element={<PerfilAdmin />} />
             <Route path="/publicaciones" element={<Publicaciones />} />
+            <Route path="/publicaciones/:id" element={<PublicacionDetalle />} />
             <Route path="/dietas" element={<Dietas />} />
             <Route path="/rutinas" element={<Rutinas />} />
             <Route path="/principal/admin" element={<Admin />} />

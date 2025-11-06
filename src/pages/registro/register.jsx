@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Registro.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../../../html_css_js_FitConnet/registro/register.css';
 
 export default function Registro() {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export default function Registro() {
     peso: "",
     altura: "",
     genero: "M",
+    rol: "usuario",
   });
   const [error, setError] = useState("");
   const [exito, setExito] = useState("");
@@ -19,6 +20,8 @@ export default function Registro() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  const [rol, setRol] = useState('usuario');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +34,12 @@ export default function Registro() {
         body: JSON.stringify(form),
       });
       if (!response.ok) {
-        throw new Error("No se pudo registrar el usuario");
+        let msg = "No se pudo registrar el usuario";
+        try {
+          const data = await response.json();
+          if (data?.message) msg = data.message;
+        } catch (_) {}
+        throw new Error(msg);
       }
       setExito("¡Registro exitoso! Ahora puedes iniciar sesión.");
       setForm({
@@ -42,100 +50,86 @@ export default function Registro() {
         peso: "",
         altura: "",
         genero: "M",
+        rol: "usuario",
       });
-      // Enlazar al login para continuar
       navigate("/login");
     } catch (err) {
       setError(err.message);
+      console.error("Error en registro:", err);
     }
   };
 
   return (
-    <div className="container">
-      {/* Panel Izquierdo: formulario y logo */}
-      <div className="left-panel">
+    <div className="register-container">
+      {/* Columna izquierda: formulario */}
+      <div className="form-section">
+        {/* Logo y nombre */}
         <div className="logo">
           <img src="/img/logo.png" alt="Logo Fitconnet" />
           <h1>Fitconnet</h1>
         </div>
 
-        <form className="form-box" onSubmit={handleSubmit}>
+        {/* Formulario */}
+        <div className="form-box">
           <h2><i>Crear Cuenta</i></h2>
 
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre usuario"
-            value={form.nombre}
-            onChange={handleChange}
-            required
-          />
+          <form onSubmit={handleSubmit} className="register-form">
+            <label htmlFor="nombre">Usuario</label>
+            <input type="text" id="nombre" name="nombre" value={form.nombre} onChange={handleChange} required />
 
-          <input
-            type="email"
-            name="correo"
-            placeholder="Correo"
-            value={form.correo}
-            onChange={handleChange}
-            required
-          />
+            <label htmlFor="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" name="contrasena" value={form.contrasena} onChange={handleChange} required />
 
-          <input
-            type="password"
-            name="contrasena"
-            placeholder="Contraseña"
-            value={form.contrasena}
-            onChange={handleChange}
-            required
-          />
+            <label htmlFor="correo">Correo</label>
+            <input type="email" id="correo" name="correo" value={form.correo} onChange={handleChange} required />
 
-          <div className="form-row">
-            <input
-              type="number"
-              name="edad"
-              placeholder="Edad"
-              value={form.edad}
-              onChange={handleChange}
-            />
-            <select name="genero" value={form.genero} onChange={handleChange}>
-              <option value="M">Masculino</option>
-              <option value="F">Femenino</option>
-              <option value="Otro">Otro</option>
+            <label htmlFor="rol">Rol</label>
+            <select id="rol" value={rol} onChange={(e) => setRol(e.target.value)}>
+              <option value="usuario">Usuario</option>
+              <option value="admin">Administrador</option>
             </select>
-          </div>
 
-          <div className="form-row">
-            <input
-              type="number"
-              name="peso"
-              placeholder="Peso (kg)"
-              value={form.peso}
-              onChange={handleChange}
-            />
-            <input
-              type="number"
-              name="altura"
-              placeholder="Altura (cm)"
-              value={form.altura}
-              onChange={handleChange}
-            />
-          </div>
+            <div className="form-row">
+              <div style={{ width: "48%" }}>
+                <label htmlFor="edad">Edad</label>
+                <input type="number" id="edad" name="edad" value={form.edad} onChange={handleChange} />
+              </div>
+              <div style={{ width: "48%" }}>
+                <label htmlFor="genero">Género</label>
+                <select id="genero" name="genero" value={form.genero} onChange={handleChange}>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+            </div>
 
-          <button type="submit">Crear</button>
-          {error && <p className="error">{error}</p>}
-          {exito && <p className="exito">{exito}</p>}
+            <div className="form-row">
+              <div style={{ width: "48%" }}>
+                <label htmlFor="peso">Peso (kg)</label>
+                <input type="number" id="peso" name="peso" value={form.peso} onChange={handleChange} />
+              </div>
+              <div style={{ width: "48%" }}>
+                <label htmlFor="altura">Altura (cm)</label>
+                <input type="number" id="altura" name="altura" value={form.altura} onChange={handleChange} />
+              </div>
+            </div>
 
-          <p className="facebook-text">Iniciar sesión con Facebook</p>
-          <button type="button" className="facebook-btn">
-            <img src="/img/facebook.png" alt="Facebook" /> Facebook
+            <button id="submitBtn" type="submit">Crear cuenta</button>
+            {error && <p className="error">{error}</p>}
+            {exito && <p className="exito">{exito}</p>}
+          </form>
+
+          {/* Botón Facebook */}
+          <button className="facebook-btn">
+            <img src="/img/facebook.png" alt="Facebook" />
+            Registrarse con Facebook
           </button>
-        </form>
+        </div>
       </div>
 
-      {/* Panel Derecho: imagen */}
-      <div className="right-panel">
-        <img src="/img/gym.jpeg" alt="Gimnasio" />
-      </div>
+      {/* Columna derecha: imagen */}
+      <div className="image-section"></div>
     </div>
   );
 }

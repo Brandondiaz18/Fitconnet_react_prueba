@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./editar_perfil_user.css";
 
 const EditarPerfil = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "carlos belcast",
-    gender: "masculino",
-    weight: 62,
-    height: 165,
-    age: 25,
-    sleep: 8,
-    water: 8,
-    email: "carlos@example.com",
-    streak: 10,
-    reps: 20,
-    achievements: 45,
+    username: "",
+    gender: "otro",
+    weight: "",
+    height: "",
+    age: "",
+    sleep: "",
+    water: "",
+    email: "",
+    streak: 0,
+    reps: 0,
+    achievements: 0,
     hours: 0,
     goals: "",
     notes: "",
@@ -317,6 +317,53 @@ const EditarPerfil = () => {
       </form>
     </div>
   );
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const correoLS = localStorage.getItem("correo");
+    (async () => {
+      try {
+        let data = null;
+        if (token) {
+          const resp = await fetch("http://localhost:8000/api/usuarios/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (resp.ok) data = await resp.json();
+        }
+        if (!data && correoLS) {
+          const respByEmail = await fetch(
+            `http://localhost:8000/api/usuarios/by-email?correo=${encodeURIComponent(correoLS)}`
+          );
+          if (respByEmail.ok) data = await respByEmail.json();
+        }
+        if (!data) {
+          const local = localStorage.getItem("perfil");
+          if (local) data = JSON.parse(local);
+        }
+        if (!data) return;
+
+        const mapGenero = (g) => {
+          if (!g) return "otro";
+          const s = String(g).toLowerCase();
+          if (s === "m" || s.startsWith("masc")) return "masculino";
+          if (s === "f" || s.startsWith("fem")) return "femenino";
+          return "otro";
+        };
+        setFormData((prev) => ({
+          ...prev,
+          username: data?.nombre || prev.username || "",
+          email: data?.correo || prev.email || "",
+          gender: mapGenero(data?.genero),
+          weight: data?.peso ?? prev.weight ?? "",
+          height: data?.altura ?? prev.height ?? "",
+          age: data?.edad ?? prev.age ?? "",
+          sleep: data?.horas_dormir ?? prev.sleep ?? "",
+          water: data?.vasos_agua ?? prev.water ?? "",
+        }));
+      } catch (err) {
+        // silent fallback
+      }
+    })();
+  }, []);
 };
 
 export default EditarPerfil;
