@@ -31,22 +31,23 @@ export async function ensureUsuariosSchema() {
   console.log('[DB] usuarios columnas:', colRows.map(r => `${r.Field}:${r.Type}:${r.Extra}`).join(', '));
   console.log('[DB] usuarios PK:', pkCol || 'none');
   const cols = colRows.map(r => r.Field);
-  // Evitar alterar PK existente
+
+  const hasCorreo = cols.includes('correo');
+  const hasCorreoElectronico = cols.includes('correo_electronico');
+  const hasPasswordHash = cols.includes('password_hash');
+  const hasContrasena = cols.includes('contrasena');
+
   // nombre
   if (!cols.includes('nombre')) {
     try { await pool.query('ALTER TABLE `usuarios` ADD COLUMN `nombre` VARCHAR(100) NOT NULL'); } catch (e) { console.error('Error agregando nombre:', e); }
   }
-  // correo
-  if (!cols.includes('correo')) {
+  // correo: solo agregar si NO existe ninguna variante
+  if (!hasCorreo && !hasCorreoElectronico) {
     try { await pool.query('ALTER TABLE `usuarios` ADD COLUMN `correo` VARCHAR(150) NOT NULL'); } catch (e) { console.error('Error agregando correo:', e); }
   }
-  // password_hash
-  if (!cols.includes('password_hash')) {
+  // password: solo agregar password_hash si NO existe contrasena ni password_hash
+  if (!hasPasswordHash && !hasContrasena) {
     try { await pool.query('ALTER TABLE `usuarios` ADD COLUMN `password_hash` VARCHAR(255) NOT NULL'); } catch (e) { console.error('Error agregando password_hash:', e); }
-  }
-  // rol
-  if (!cols.includes('rol')) {
-    try { await pool.query("ALTER TABLE `usuarios` ADD COLUMN `rol` ENUM('admin','usuario') NOT NULL DEFAULT 'usuario'"); } catch (e) { console.error('Error agregando rol:', e); }
   }
   // Optional profile columns
   const optionalCols = [
@@ -64,10 +65,19 @@ export async function ensureUsuariosSchema() {
     }
   }
 
-  // Ensure unique index on correo
-  const uniqueCorreo = await hasUniqueIndex('usuarios', 'correo');
-  if (!uniqueCorreo) {
-    try { await pool.query('ALTER TABLE `usuarios` ADD UNIQUE (`correo`)'); } catch (e) { /* ignore */ }
+  // Ensure unique index en correo si existe esa columna
+  if (hasCorreo) {
+    const uniqueCorreo = await hasUniqueIndex('usuarios', 'correo');
+    if (!uniqueCorreo) {
+      try { await pool.query('ALTER TABLE `usuarios` ADD UNIQUE (`correo`)'); } catch (e) { /* ignore */ }
+    }
+  }
+  // Si existe correo_electronico, asegurar índice único también
+  if (hasCorreoElectronico) {
+    const uniqueCorreoE = await hasUniqueIndex('usuarios', 'correo_electronico');
+    if (!uniqueCorreoE) {
+      try { await pool.query('ALTER TABLE `usuarios` ADD UNIQUE (`correo_electronico`)'); } catch (e) { /* ignore */ }
+    }
   }
 }
 

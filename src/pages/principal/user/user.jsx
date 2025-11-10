@@ -1,13 +1,54 @@
-import React from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./user.css";
 
 export default function User() {
   const navigate = useNavigate();
 
+  // Amigos en localStorage
+  const [friends, setFriends] = useState(() => {
+    try {
+      const saved = localStorage.getItem("friends");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [newFriend, setNewFriend] = useState({ nombre: "", correo: "" });
+
+  useEffect(() => {
+    localStorage.setItem("friends", JSON.stringify(friends));
+  }, [friends]);
+
+  // Nombre para saludo
+  const nombre = useMemo(() => {
+    try {
+      const userStr = localStorage.getItem("user");
+      const nameLS = localStorage.getItem("nombre");
+      const tokenEmail = localStorage.getItem("email");
+      let n = "Usuario";
+      if (userStr) {
+        const u = JSON.parse(userStr);
+        n = u?.nombre || u?.name || u?.username || n;
+      }
+      if (!n && nameLS) n = nameLS;
+      if (!n && tokenEmail) n = tokenEmail.split("@")[0];
+      return n || "Usuario";
+    } catch {
+      return "Usuario";
+    }
+  }, []);
+
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const addFriend = (e) => {
+    e.preventDefault();
+    if (!newFriend.nombre.trim() || !newFriend.correo.trim()) return;
+    setFriends([...friends, { ...newFriend }]);
+    setNewFriend({ nombre: "", correo: "" });
   };
 
   return (
@@ -17,8 +58,8 @@ export default function User() {
         <div className="menu-container">
           <div className="menu-button">☰</div>
           <div className="menu-content">
-            <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("servicios");}}>Nuestros Servicios</a>
             <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("planes");}}>Nuestros Planes</a>
+            <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("servicios");}}>Nuestros Servicios</a>
             <a href="#" onClick={(e)=>{e.preventDefault(); scrollTo("contacto");}}>Contacto</a>
           </div>
         </div>
@@ -27,8 +68,8 @@ export default function User() {
 
         <div className="center-buttons">
           <button onClick={() => scrollTo("inicio")}>Inicio</button>
-          <button onClick={() => scrollTo("servicios")}>Nuestros Servicios</button>
           <button onClick={() => scrollTo("planes")}>Nuestros Planes</button>
+          <button onClick={() => scrollTo("servicios")}>Nuestros Servicios</button>
           <button onClick={() => scrollTo("contacto")}>Contacto</button>
         </div>
 
@@ -44,7 +85,7 @@ export default function User() {
         <br />
         <br />
         <br />
-        <h1>Bienvenido a FitConnet</h1>
+        <h1 style={{ textAlign: "center" }}>hola {nombre} bienvenido a FitConnet</h1>
         <br />
         <br />
         <img src="/img/Seccion2.png" alt="Gimnasio" />
@@ -115,12 +156,36 @@ export default function User() {
         {/* Panel izquierdo: Amigos */}
         <div className="friends-panel">
           <h2>Amigos</h2>
-          {["Paola", "Miguel", "Santiago", "Ronaldo", "Angel", "Jessica"].map((nombre) => (
-            <div className="friend" key={nombre}>
-              <img src="/img/perfil.png" alt="" />
-              <a href="#">{nombre}</a>
+          <form onSubmit={addFriend} style={{ width: "100%", marginBottom: 10 }}>
+            <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+              <input
+                type="text"
+                placeholder="Nombre"
+                value={newFriend.nombre}
+                onChange={(e) => setNewFriend({ ...newFriend, nombre: e.target.value })}
+                style={{ flex: 1 }}
+              />
+              <input
+                type="email"
+                placeholder="Correo"
+                value={newFriend.correo}
+                onChange={(e) => setNewFriend({ ...newFriend, correo: e.target.value })}
+                style={{ flex: 1 }}
+              />
+              <button type="submit">Agregar</button>
             </div>
-          ))}
+          </form>
+
+          {friends.length === 0 ? (
+            <p style={{ color: "#aaa" }}>No tienes amigos aún.</p>
+          ) : (
+            friends.map((amigo, idx) => (
+              <div className="friend" key={`${amigo.correo}-${idx}`}>
+                <img src="/img/perfil.png" alt="" />
+                <a href="#">{amigo.nombre} — {amigo.correo}</a>
+              </div>
+            ))
+          )}
         </div>
 
         {/* Panel derecho: Publicaciones */}
@@ -164,17 +229,44 @@ export default function User() {
         </div>
       </section>
 
-      {/* Sección 6 */}
-      <section className="section6">
-        <p>Pronto App - Información aleatoria</p>
+      {/* Sección 6: Dietas y Ejercicios */}
+      <section className="section6" id="section6">
+        <h2>Explora más</h2>
+        <div className="planes-container">
+          <div className="plan">
+            <img src="/img/Reportes.jpg" alt="Dietas" />
+            <p>Dietas personalizadas</p>
+            <button onClick={() => navigate("/dietas")}>
+              Ir a Dietas
+            </button>
+          </div>
+
+          <div className="plan">
+            <img src="/img/Gestion_user.jpg" alt="Ejercicios" />
+            <p>Ejercicios para todos</p>
+            <button onClick={() => navigate("/ejercicios/gym")}>
+              Ir a Ejercicios
+            </button>
+          </div>
+        </div>
       </section>
 
-      {/* Sección 7 */}
+      {/* Sección 7: Contacto (dos personas) */}
       <section className="section7" id="contacto">
         <h2>Contacto</h2>
-        <div className="contact-info">
-          <p>📧 Correo: contacto@fitconett.com</p>
-          <p>📞 Teléfono: +123 456 7890</p>
+        <div className="planes-container">
+          <div className="plan">
+            <img src="/img/perfil.png" alt="Contacto 1" />
+            <p><strong>Allan Castillo</strong></p>
+            <p>📧 contacto@fitconett.com</p>
+            <p>📞 +123 456 7890</p>
+          </div>
+          <div className="plan">
+            <img src="/img/perfil.png" alt="Contacto 2" />
+            <p><strong>Paola Fit</strong></p>
+            <p>📧 paola@fitconett.com</p>
+            <p>📞 +321 654 0987</p>
+          </div>
         </div>
       </section>
 
@@ -188,7 +280,7 @@ export default function User() {
             <li>Sábados y Domingos: 8:00 AM - 6:00 PM</li>
           </ul>
           <ul>
-            <li>© 2025 FitConett - Todos los derechos reservados.</li>
+            <li>© {new Date().getFullYear()} FitConett - Todos los derechos reservados.</li>
           </ul>
         </div>
       </footer>

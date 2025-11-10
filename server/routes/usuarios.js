@@ -36,11 +36,13 @@ router.post('/', async (req, res) => {
       if (exists.length) return res.status(409).json({ message: 'Correo ya registrado' });
     }
 
-    const password_hash = await bcrypt.hash(contrasena, 10);
+    const hashedPwd = await bcrypt.hash(contrasena, 10);
 
     // Construir INSERT dinámico según columnas disponibles
-    const insertCols = ['nombre', 'password_hash'];
-    const insertVals = [nombre, password_hash];
+    const pwdCol = cols.has('password_hash') ? 'password_hash' : (cols.has('contrasena') ? 'contrasena' : null);
+    if (!pwdCol) return res.status(500).json({ message: 'Estructura de usuarios sin columna de contraseña' });
+    const insertCols = ['nombre', pwdCol];
+    const insertVals = [nombre, hashedPwd];
     if (hasCorreo) { insertCols.push('correo'); insertVals.push(correo); }
     if (hasCorreoElectronico) { insertCols.push('correo_electronico'); insertVals.push(correo); }
 
@@ -129,17 +131,30 @@ router.get('/by-email', async (req, res) => {
 // Actualizar perfil
 router.put('/update', requireAuth, async (req, res) => {
   try {
-    const allowed = ['nombre','correo','genero','peso','altura','edad','horas_dormir','vasos_agua'];
-    const entries = Object.entries(req.body).filter(([k]) => allowed.includes(k));
-    if (!entries.length) return res.status(400).json({ message: 'No hay campos válidos para actualizar' });
+    const [colRows] = await pool.query('SHOW COLUMNS FROM `usuarios`');
+    const cols = new Set(colRows.map(r => r.Field));
 
-    const fields = entries.map(([k]) => `${k} = ?`).join(', ');
-    const values = entries.map(([,v]) => v);
+    const allowedInput = ['nombre','correo','genero','peso','altura','edad','horas_dormir','vasos_agua'];
+    const incoming = Object.entries(req.body).filter(([k]) => allowedInput.includes(k));
+    if (!incoming.length) return res.status(400).json({ message: 'No hay campos válidos para actualizar' });
 
-    const [result] = await pool.query(`UPDATE usuarios SET ${fields} WHERE id_usuario = ?`, [...values, req.user.id]);
+    // Mapear "correo" al nombre de columna real
+    const mapped = incoming.map(([k,v]) => {
+      if (k === 'correo') {
+        if (cols.has('correo')) return ['correo', v];
+        if (cols.has('correo_electronico')) return ['correo_electronico', v];
+      }
+      return [k,v];
+    });
+
+    const fields = mapped.map(([k]) => `${k} = ?`).join(', ');
+    const values = mapped.map(([,v]) => v);
+
+    const idCol = cols.has('id_usuario') ? 'id_usuario' : (cols.has('id') ? 'id' : 'id_usuario');
+    const [result] = await pool.query(`UPDATE usuarios SET ${fields} WHERE ${idCol} = ?`, [...values, req.user.id]);
     if (result.affectedRows === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
 
-    const [rows] = await pool.query('SELECT id_usuario as id, nombre, correo, genero, peso, altura, edad, horas_dormir, vasos_agua FROM usuarios WHERE id_usuario = ?', [req.user.id]);
+    const [rows] = await pool.query(`SELECT ${idCol} as id, nombre, IFNULL(correo, correo_electronico) as correo, genero, peso, altura, edad, horas_dormir, vasos_agua FROM usuarios WHERE ${idCol} = ?`, [req.user.id]);
     res.json(rows[0]);
   } catch (err) {
     console.error(err);

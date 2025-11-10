@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../../html_css_js_FitConnet/registro/register.css';
+import './Registro.css';
 
 export default function Registro() {
   const navigate = useNavigate();
