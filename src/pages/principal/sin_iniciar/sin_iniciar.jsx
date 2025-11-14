@@ -127,16 +127,14 @@ const SinIniciar = () => {
       <footer className="section8">
         <img src="/img/logo.png" className="footer-logo" alt="Logo del pie de página" />
         <div className="footer-text">
-          <ul>
-            <li>
-              <strong>Horarios de Atención:</strong>
-            </li>
-            <li>Lunes a Viernes: 6:00 AM - 10:00 PM</li>
-            <li>Sábados y Domingos: 8:00 AM - 6:00 PM</li>
-          </ul>
-          <ul>
-            <li>© 2025 FitConnet - Todos los derechos reservados.</li>
-          </ul>
+          <div className="schedule-box">
+            <ul>
+              <li>
+                <strong>Horarios de Atención:</strong>
+              </li>
+              <li>Lunes a Viernes: 6:00 AM - 10:00 PM</li>
+            </ul>
+          </div>
         </div>
       </footer>
     </div>

@@ -263,9 +263,10 @@ section {
 
 /* Sección 8: Pie de página */
 .section8 {
-    display: flex;
+    display: grid;
+    grid-template-columns: 140px 1fr;
     align-items: center;
-    justify-content: space-between;
+    column-gap: 24px;
     background: black;
     color: white;
     padding: 30px 5%;
@@ -273,15 +274,29 @@ section {
     width: 100%;
     min-height: 160px;
     border-top: 4px solid #8000ff;
-    gap: 20px;
-    flex-wrap: wrap;
     box-sizing: border-box;
 }
-
 .footer-logo {
     width: 120px;
-    margin-right: 10px;
+    margin-right: 0;
     border-radius: 5px;
+    justify-self: start;
+}
+.footer-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    gap: 8px;
+}
+.footer-text ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
 .footer-content {
@@ -297,3 +312,6 @@ section {
 .footer-text {
     flex: 1;
 }
+
+.section8 .schedule-box { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 16px 20px; }
+.section8 .schedule-box ul { width: 100%; }

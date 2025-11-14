@@ -66,6 +66,35 @@ export default function Perfil() {
     }
   };
 
+  // Eliminar cuenta
+  const deleteAccount = async () => {
+    const confirm = window.confirm("¿Seguro que deseas eliminar tu cuenta? Esta acción es permanente.");
+    if (!confirm) return;
+    const token = localStorage.getItem("token");
+    try {
+      const resp = await fetch("http://localhost:8000/api/usuarios/me", {
+        method: "DELETE",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (resp.ok) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("perfil");
+        localStorage.removeItem("user");
+        localStorage.removeItem("email");
+        localStorage.removeItem("nombre");
+        alert("Cuenta eliminada correctamente. ¡Esperamos verte pronto!");
+        navigate("/register");
+      } else {
+        let msg = "No se pudo eliminar la cuenta.";
+        try { const data = await resp.json(); msg = data?.message || msg; } catch {}
+        alert(msg);
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error de red al eliminar la cuenta.");
+    }
+  };
+
   // Menú desplegable (manejado con React state)
   const [menuOpen, setMenuOpen] = React.useState(false);
   const toggleMenu = (e) => {
@@ -112,6 +141,7 @@ export default function Perfil() {
         <div className="right-buttons">
           {/* Ocultamos el botón Perfil porque ya estamos en Perfil */}
           <button onClick={logout}>Cerrar Sesión</button>
+          <button onClick={deleteAccount} className="danger-btn">Eliminar Cuenta</button>
         </div>
       </header>
 

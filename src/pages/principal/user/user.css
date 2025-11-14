@@ -49,6 +49,12 @@ section { border-bottom: 1px solid var(--color-border); }
   background: var(--color-elevated);
   color: var(--color-text);
 }
+.section2 h1 {
+  text-align: center !important;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
 .section2 img {
   display: block;
   width: 100%;
@@ -142,14 +148,34 @@ section { border-bottom: 1px solid var(--color-border); }
 /* Contacto y footer */
 .section7 { background: var(--color-bg); color: var(--color-text); }
 .section8 {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border-top: 1px solid var(--color-border);
+  background: #0b0b0f; /* negro suave para destacar */
+  color: #fff;
+  border-top: 4px solid #8000ff;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  column-gap: 32px;
+  padding: 40px 5%;
+  width: 100%;
+  min-height: 200px;
+  box-sizing: border-box;
 }
-.footer-logo { border-radius: var(--radius-sm); }
+.footer-logo { border-radius: var(--radius-sm); width: 120px; height: auto; justify-self: start; }
+.section8 .footer-text { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; width: 100%; gap: 8px; padding-left: 8px; }
+.section8 .footer-text ul { list-style: none; padding: 0; margin: 0; width: 100%; font-size: 1.06rem; line-height: 1.6; }
+.section8 .footer-text ul li { margin: 6px 0; }
+@media (max-width: 768px) {
+  .section8 { grid-template-columns: 1fr; row-gap: 16px; }
+  .footer-logo { justify-self: flex-start; }
+}
 
 /* Ajustes solicitados */
-.section3 h2 { color: #000; }
+/* --- Texto negro en Planes, Servicios y Contacto --- */
+.section3, .section3 h2, .section3 p, .section3 li, .section3 .plan p { color: #000; }
+.section4, .section4 h2, .section4 p, .section4 li { color: #fff; }
+.section4 .carousel div { color: #fff; }
+.section6, .section6 h2, .section6 p, .section6 li, .section6 .plan p { color: #000; }
+.section7, .section7 h2, .section7 p, .section7 li { color: #000; }
 
 .friends-panel form input,
 .friends-panel form button {
@@ -166,11 +192,19 @@ section { border-bottom: 1px solid var(--color-border); }
 }
 .friends-panel form button:hover { background: var(--color-primary-hover); }
 
-.section7 .planes-container .plan p { margin: 4px 0; }
-
-.section8 .footer-text {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* Contacto: prevenir desbordes de texto y adaptar los cuadros */
+.section7 .planes-container { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.section7 .plan {
+  width: auto;              /* sobrescribe el ancho fijo de .plan */
+  min-width: 240px;
+  max-width: 360px;
+  box-sizing: border-box;
 }
+.section7 .plan p, .section7 .plan strong {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+.section8 .schedule-box { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 16px 20px; }
+.section8 .schedule-box ul { width: 100%; }

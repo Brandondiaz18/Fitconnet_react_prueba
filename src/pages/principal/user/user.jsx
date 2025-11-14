@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./user.css";
+import Chatbot from "../../../components/Chatbot.jsx";
 
 export default function User() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function User() {
     }
   });
   const [newFriend, setNewFriend] = useState({ nombre: "", correo: "" });
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("friends", JSON.stringify(friends));
@@ -23,16 +25,16 @@ export default function User() {
   // Nombre para saludo
   const nombre = useMemo(() => {
     try {
-      const userStr = localStorage.getItem("user");
+      const perfilStr = localStorage.getItem("perfil");
       const nameLS = localStorage.getItem("nombre");
-      const tokenEmail = localStorage.getItem("email");
-      let n = "Usuario";
-      if (userStr) {
-        const u = JSON.parse(userStr);
-        n = u?.nombre || u?.name || u?.username || n;
+      const correoLS = localStorage.getItem("correo");
+      let n = "";
+      if (perfilStr) {
+        const p = JSON.parse(perfilStr);
+        n = p?.nombre || p?.username || p?.name || "";
       }
       if (!n && nameLS) n = nameLS;
-      if (!n && tokenEmail) n = tokenEmail.split("@")[0];
+      if (!n && correoLS) n = correoLS.split("@")[0];
       return n || "Usuario";
     } catch {
       return "Usuario";
@@ -74,7 +76,7 @@ export default function User() {
         </div>
 
         <div className="right-buttons">
-          <button id="chatIA">Chat</button>
+          <button id="chatIA" onClick={() => setChatOpen(true)}>Chat</button>
           <button id="perfil" onClick={() => navigate("/perfil")}>Perfil</button>
           <button id="cerrarSesion" onClick={() => navigate("/login")}>Cerrar Sesión</button>
         </div>
@@ -258,14 +260,14 @@ export default function User() {
           <div className="plan">
             <img src="/img/perfil.png" alt="Contacto 1" />
             <p><strong>Allan Castillo</strong></p>
-            <p>📧 contacto@fitconett.com</p>
-            <p>📞 +123 456 7890</p>
+            <p>allancastillosena2703@gmail.com</p>
+            <p>3045232524</p>
           </div>
           <div className="plan">
             <img src="/img/perfil.png" alt="Contacto 2" />
-            <p><strong>Paola Fit</strong></p>
-            <p>📧 paola@fitconett.com</p>
-            <p>📞 +321 654 0987</p>
+            <p><strong>Brandon Diaz</strong></p>
+            <p>brandondiaz.sena@gmail.com</p>
+            <p>3118667935</p>
           </div>
         </div>
       </section>
@@ -274,16 +276,16 @@ export default function User() {
       <footer className="section8">
         <img src="/img/logo.png" className="footer-logo" alt="Logo del pie de página" />
         <div className="footer-text">
-          <ul>
-            <li><strong>Horarios de Atención:</strong></li>
-            <li>Lunes a Viernes: 6:00 AM - 10:00 PM</li>
-            <li>Sábados y Domingos: 8:00 AM - 6:00 PM</li>
-          </ul>
-          <ul>
-            <li>© {new Date().getFullYear()} FitConett - Todos los derechos reservados.</li>
-          </ul>
+          <div className="schedule-box">
+            <ul>
+              <li><strong>Horarios de Atención:</strong></li>
+              <li>Lunes a Viernes: 6:00 AM - 10:00 PM</li>
+            </ul>
+          </div>
         </div>
       </footer>
+      {/* Chatbot */}
+      <Chatbot open={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   );
 }
