@@ -108,7 +108,7 @@ const Publicaciones = () => {
   }
 
   return (
-    <div>
+    <div className="publicaciones-page">
       {/* HEADER */}
       <header>
         <div className="logo">

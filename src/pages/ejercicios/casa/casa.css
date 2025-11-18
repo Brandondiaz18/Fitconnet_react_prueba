@@ -1,5 +1,5 @@
 /* ===== NAVBAR MODERNA ===== */
-.navbar {
+.casa-page .navbar {
   width: 100%;
   background: #1a1a1a;
   display: flex;
@@ -10,7 +10,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.logo {
+.casa-page .logo {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -19,19 +19,19 @@
   color: #ffffff;
 }
 
-.logo img {
+.casa-page .logo img {
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
 
-.nav-links {
+.casa-page .nav-links {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.nav-links a {
+.casa-page .nav-links a {
   background: #8000ff;
   color: #ffffff;
   padding: 8px 18px;
@@ -41,48 +41,44 @@
   transition: all 0.3s ease;
 }
 
-.nav-links a:hover {
+.casa-page .nav-links a:hover {
   background: #a300ff;
   transform: scale(1.05);
 }
 
-.nav-links a.active {
+.casa-page .nav-links a.active {
   background: #b200ff;
 }
 
 /* ===== ESTRUCTURA GENERAL ===== */
-body {
-  margin: 0;
+.casa-page {
   font-family: 'Poppins', sans-serif;
   background: #1f1f1f;
   color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.container {
+.casa-page .container {
   max-width: 1100px;
   margin: 30px auto;
   padding: 20px;
 }
 
 /* ===== SECCIONES DE EJERCICIOS ===== */
-.lista-ejercicios h2,
-.agregar-ejercicio h2 {
+.casa-page .lista-ejercicios h2,
+.casa-page .agregar-ejercicio h2 {
   text-align: center;
   color: #dcdcdc;
   margin-bottom: 20px;
   font-size: 24px;
 }
 
-.grid {
+.casa-page .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
-.ejercicio-card {
+.casa-page .ejercicio-card {
   background: #2e2e2e;
   border-radius: 12px;
   overflow: hidden;
@@ -90,26 +86,26 @@ body {
   transition: transform 0.3s ease;
   text-align: center;
 }
-.ejercicio-card:hover {
+.casa-page .ejercicio-card:hover {
   transform: scale(1.03);
 }
-.ejercicio-card img {
+.casa-page .ejercicio-card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
-.ejercicio-card h3 {
+.casa-page .ejercicio-card h3 {
   color: #a569bd;
   margin: 10px 0 4px 0;
 }
-.ejercicio-card p {
+.casa-page .ejercicio-card p {
   padding: 0 10px 16px;
   font-size: 14px;
   color: #ddd;
 }
 
 /* ===== FORMULARIO ===== */
-.agregar-ejercicio form {
+.casa-page .agregar-ejercicio form {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -120,19 +116,19 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
-.agregar-ejercicio input,
-.agregar-ejercicio textarea {
+.casa-page .agregar-ejercicio input,
+.casa-page .agregar-ejercicio textarea {
   padding: 10px;
   border-radius: 8px;
   border: none;
   outline: none;
   font-size: 15px;
 }
-.agregar-ejercicio textarea {
+.casa-page .agregar-ejercicio textarea {
   resize: none;
   height: 80px;
 }
-.agregar-ejercicio button {
+.casa-page .agregar-ejercicio button {
   background: #a569bd;
   color: #fff;
   font-weight: bold;
@@ -142,32 +138,32 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.agregar-ejercicio button:hover {
+.casa-page .agregar-ejercicio button:hover {
   background: #8e44ad;
 }
 
 /* ===== RESPONSIVIDAD ===== */
 @media (max-width: 768px) {
-  .navbar {
+  .casa-page .navbar {
     flex-direction: column;
     padding: 16px;
     text-align: center;
   }
 
-  .nav-links {
+  .casa-page .nav-links {
     flex-wrap: wrap;
     justify-content: center;
   }
 
-  .nav-links a {
+  .casa-page .nav-links a {
     margin: 6px 4px;
   }
 
-  .agregar-ejercicio form {
+  .casa-page .agregar-ejercicio form {
     width: 90%;
   }
 
-  .lista-ejercicios h2 {
+  .casa-page .lista-ejercicios h2 {
     font-size: 20px;
   }
 }

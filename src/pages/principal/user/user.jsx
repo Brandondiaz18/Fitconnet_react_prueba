@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./user.css";
-import Chatbot from "../../../components/Chatbot.jsx";
+// Chat global se monta en App.jsx
 
 export default function User() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function User() {
     }
   });
   const [newFriend, setNewFriend] = useState({ nombre: "", correo: "" });
-  const [chatOpen, setChatOpen] = useState(false);
+  // El chat global se abre desde window.openFitChat
 
   useEffect(() => {
     localStorage.setItem("friends", JSON.stringify(friends));
@@ -76,7 +76,7 @@ export default function User() {
         </div>
 
         <div className="right-buttons">
-          <button id="chatIA" onClick={() => setChatOpen(true)}>Chat</button>
+          <button id="chatIA" onClick={() => window.openFitChat?.()}>Chat</button>
           <button id="perfil" onClick={() => navigate("/perfil")}>Perfil</button>
           <button id="cerrarSesion" onClick={() => navigate("/login")}>Cerrar Sesión</button>
         </div>
@@ -284,8 +284,7 @@ export default function User() {
           </div>
         </div>
       </footer>
-      {/* Chatbot */}
-      <Chatbot open={chatOpen} onClose={() => setChatOpen(false)} />
+      {/* Chatbot global: se renderiza en App.jsx */}
     </div>
   );
 }

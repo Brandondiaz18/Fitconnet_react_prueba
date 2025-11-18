@@ -9,6 +9,13 @@ export default function Navbar() {
   // Ocultar navbar en las páginas de Login y Registro
   if (location.pathname === "/login" || location.pathname === "/register") return null;
 
+  // Ocultar navbar en los apartados de "Nuestros Servicios"
+  // (páginas con su propio header): ejercicios, dietas y rutinas
+  const hideOnServices = ["/ejercicios", "/dietas", "/rutinas"];
+  if (hideOnServices.some(prefix => location.pathname.startsWith(prefix))) {
+    return null;
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");

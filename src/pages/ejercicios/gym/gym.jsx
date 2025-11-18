@@ -56,7 +56,7 @@ export default function Gym() {
   };
 
   return (
-    <div>
+    <div className="gym-page">
       {/* 🔹 NAVBAR */}
       <header className="navbar">
         <div className="logo">
@@ -69,10 +69,10 @@ export default function Gym() {
               <button onClick={() => navigate("/")}>Inicio</button>
             </li>
             <li>
-              <button onClick={() => navigate("/ejercicios/gym")}>Rutinas</button>
+              <button className="activo" onClick={() => navigate("/ejercicios/gym")}>Rutinas</button>
             </li>
             <li>
-              <button onClick={() => navigate("/ejercicios/dietas")}>Dietas</button>
+              <button onClick={() => navigate("/dietas")}>Dietas</button>
             </li>
             <li>
               <button>Contacto</button>

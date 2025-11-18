@@ -1,20 +1,7 @@
-/* Reset y base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font-sans);
-}
+/* Encapsulado de estilos para Publicaciones */
+.publicaciones-page { font-family: var(--font-sans); }
 
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-header {
+.publicaciones-page header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,26 +12,25 @@ header {
   border-bottom: 1px solid var(--color-border);
 }
 
-.logo {
+.publicaciones-page .logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.logo img { width: 45px; border-radius: var(--radius-sm); }
+.publicaciones-page .logo img { width: 45px; border-radius: var(--radius-sm); }
+.publicaciones-page header h2 { font-size: 1.8rem; }
 
-header h2 { font-size: 1.8rem; }
-
-.perfil {
+.publicaciones-page .perfil {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.perfil img {
+.publicaciones-page .perfil img {
   width: 40px;
   border-radius: 50%;
   border: 2px solid var(--color-border);
 }
-.logout {
+.publicaciones-page .logout {
   background: #fff;
   border: none;
   border-radius: var(--radius-sm);
@@ -55,7 +41,7 @@ header h2 { font-size: 1.8rem; }
   box-shadow: var(--shadow-sm);
 }
 
-main {
+.publicaciones-page main {
   flex: 1;
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -64,7 +50,7 @@ main {
   height: 100%;
 }
 
-.amigos {
+.publicaciones-page .amigos {
   background: var(--color-surface);
   padding: 15px;
   border-radius: var(--radius-md);
@@ -72,13 +58,13 @@ main {
   border: 1px solid var(--color-border);
   height: fit-content;
 }
-.amigos h3 {
+.publicaciones-page .amigos h3 {
   text-align: center;
   margin-bottom: 10px;
   color: var(--color-primary-400);
 }
-.amigos ul { list-style: none; }
-.amigos li {
+.publicaciones-page .amigos ul { list-style: none; }
+.publicaciones-page .amigos li {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -87,16 +73,16 @@ main {
   transition: background 0.2s;
   cursor: pointer;
 }
-.amigos li:hover { background: var(--color-elevated); }
-.amigos img { width: 30px; border-radius: 50%; }
+.publicaciones-page .amigos li:hover { background: var(--color-elevated); }
+.publicaciones-page .amigos img { width: 30px; border-radius: 50%; }
 
-.publicaciones {
+.publicaciones-page .publicaciones {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.nueva-publicacion {
+.publicaciones-page .nueva-publicacion {
   align-self: flex-end;
   background: var(--color-primary);
   color: #fff;
@@ -108,9 +94,9 @@ main {
   transition: 0.3s;
   box-shadow: var(--shadow-sm);
 }
-.nueva-publicacion:hover { background: var(--color-primary-600); }
+.publicaciones-page .nueva-publicacion:hover { background: var(--color-primary-600); }
 
-.post {
+.publicaciones-page .post {
   background: var(--color-surface);
   padding: 15px;
   border-radius: var(--radius-md);
@@ -118,24 +104,24 @@ main {
   border: 1px solid var(--color-border);
   transition: 0.2s;
 }
-.post:hover { transform: translateY(-4px); }
-.post h4 a {
+.publicaciones-page .post:hover { transform: translateY(-4px); }
+.publicaciones-page .post h4 a {
   color: var(--color-primary-400);
   font-weight: bold;
   text-decoration: none;
 }
-.post img {
+.publicaciones-page .post img {
   width: 100%;
   border-radius: var(--radius-sm);
   margin-top: 10px;
 }
-.acciones {
+.publicaciones-page .acciones {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
-.like {
+.publicaciones-page .like {
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -143,14 +129,14 @@ main {
   transition: transform 0.2s;
   color: #ff6b6b;
 }
-.like:hover { transform: scale(1.2); }
-.like.activo {
+.publicaciones-page .like:hover { transform: scale(1.2); }
+.publicaciones-page .like.activo {
   color: red;
   transform: scale(1.3);
 }
 
 /* MODAL */
-.modal {
+.publicaciones-page .modal {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -160,7 +146,7 @@ main {
   align-items: center;
   z-index: 1000;
 }
-.modal-content {
+.publicaciones-page .modal-content {
   background: var(--color-surface);
   padding: 20px;
   border-radius: var(--radius-md);
@@ -170,7 +156,7 @@ main {
   gap: 10px;
   border: 1px solid var(--color-border);
 }
-.modal-content textarea {
+.publicaciones-page .modal-content textarea {
   height: 100px;
   resize: none;
   padding: 8px;
@@ -179,33 +165,33 @@ main {
   background: #000;
   color: #fff;
 }
-.modal-content input {
+.publicaciones-page .modal-content input {
   padding: 8px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
   background: #000;
   color: #fff;
 }
-.botones-modal {
+.publicaciones-page .botones-modal {
   display: flex;
   justify-content: space-between;
 }
-.botones-modal button {
+.publicaciones-page .botones-modal button {
   padding: 8px 15px;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
 }
-#btn-publicar {
+.publicaciones-page #btn-publicar {
   background: var(--color-primary);
   color: #fff;
 }
-#btn-cancelar {
+.publicaciones-page #btn-cancelar {
   background: var(--color-elevated);
   color: var(--color-text);
 }
 
-footer {
+.publicaciones-page footer {
   background: var(--color-primary);
   color: #fff;
   text-align: center;

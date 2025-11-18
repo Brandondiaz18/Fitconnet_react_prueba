@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRouter from './routes/auth.js';
 import usuariosRouter from './routes/usuarios.js';
 import publicacionesRouter from './routes/publicaciones.js';
+import chatRouter from './routes/chat.js';
 
 dotenv.config();
 
@@ -23,9 +24,13 @@ app.use(express.json());
 
 // Ensure DB schema is ready
 import { ensureUsuariosSchema, ensurePublicacionesSchema, ensureSecuritySchema } from './sql/init.js';
-await ensureUsuariosSchema();
-await ensurePublicacionesSchema();
-await ensureSecuritySchema();
+try {
+  await ensureUsuariosSchema();
+  await ensurePublicacionesSchema();
+  await ensureSecuritySchema();
+} catch (err) {
+  console.warn('[DB] Inicialización de esquema omitida:', err?.message || err);
+}
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'fitconnet-backend' });
@@ -34,6 +39,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/usuarios', usuariosRouter);
 app.use('/api/publicaciones', publicacionesRouter);
+app.use('/api/chat', chatRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend escuchando en http://localhost:${PORT}`);

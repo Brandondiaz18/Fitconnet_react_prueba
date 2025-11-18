@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/principal/user/user.jsx";
 import Login from "./pages/login/login";
@@ -22,6 +23,7 @@ import SinIniciar from "./pages/principal/sin_iniciar/sin_iniciar.jsx";
 import EditarPerfil from "./pages/perfil/editar_perfil/editar_perfil_user/editar_perfil_user.jsx";
 import EditarPerfilAdmin from "./pages/perfil/editar_perfil/editar_perfil_admin/editar_perfil_admin.jsx";
 import PublicacionDetalle from "./pages/publicaciones/detalle.jsx";
+import Chatbot from "./components/Chatbot.jsx";
 
 // Función para proteger rutas (solo accesibles si el usuario está logueado)
 const PrivateRoute = ({ children }) => {
@@ -30,6 +32,17 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+  const [chatOpen, setChatOpen] = useState(false);
+
+  useEffect(() => {
+    // Exponer helpers globales para abrir/cerrar el chat desde cualquier página
+    window.openFitChat = () => setChatOpen(true);
+    window.closeFitChat = () => setChatOpen(false);
+    return () => {
+      delete window.openFitChat;
+      delete window.closeFitChat;
+    };
+  }, []);
   return (
     <Router>
       <div className="container-full" style={{width: "100vw", maxWidth: "100%", overflowX: "hidden"}}>
@@ -73,6 +86,9 @@ function App() {
 
         {/* Pie de página */}
         <Footer />
+
+        {/* Chat global (ventana flotante) */}
+        <Chatbot open={chatOpen} onClose={() => setChatOpen(false)} />
       </div>
     </Router>
   );

@@ -41,7 +41,7 @@ export default function Calistenia() {
   };
 
   return (
-    <div>
+    <div className="calistenia-page">
       <header>
         <div className="logo">
           <img src="../../img/logo-fitconnet.png" alt="FitConnet Logo" />

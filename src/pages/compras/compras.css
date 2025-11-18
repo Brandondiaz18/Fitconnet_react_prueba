@@ -1,18 +1,10 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
+.compras-page {
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-.container {
+.compras-page .container {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -22,19 +14,18 @@ body {
 }
 
 /* Panel Izquierdo */
-.left-panel {
+.compras-page .left-panel {
   width: 60%;
   height: 100%;
 }
-
-.left-panel img {
+.compras-page .left-panel img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Panel Derecho */
-.right-panel {
+.compras-page .right-panel {
   width: 40%;
   background: #333333;
   padding: 20px;
@@ -46,25 +37,23 @@ body {
   color: white;
 }
 
-.logo {
+.compras-page .logo {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
 }
-
-.logo img {
+.compras-page .logo img {
   width: 70px;
   border-radius: 5px;
 }
-
-.logo h1 {
+.compras-page .logo h1 {
   font-size: 2rem;
   font-weight: bold;
 }
 
 /* Caja del formulario */
-.form-box {
+.compras-page .form-box {
   background: white;
   color: black;
   padding: 25px 20px;
@@ -73,16 +62,14 @@ body {
   max-width: 350px;
   text-align: center;
 }
-
-.form-box h2 {
+.compras-page .form-box h2 {
   background: purple;
   color: white;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
-.input-box {
+.compras-page .input-box {
   background: black;
   color: white;
   padding: 10px;
@@ -90,22 +77,19 @@ body {
   margin-bottom: 15px;
   text-align: left;
 }
-
-.input-box label {
+.compras-page .input-box label {
   display: block;
   margin-bottom: 5px;
 }
-
-.input-box select,
-.input-box input {
+.compras-page .input-box select,
+.compras-page .input-box input {
   width: 100%;
   padding: 8px;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
 }
-
-.btn {
+.compras-page .btn {
   background: white;
   border: 2px solid black;
   padding: 12px;
@@ -116,12 +100,10 @@ body {
   cursor: pointer;
   margin-top: 10px;
 }
-
-.btn:hover {
+.compras-page .btn:hover {
   background: #eee;
 }
-
-.footer {
+.compras-page .footer {
   margin-top: 15px;
   font-size: 0.9rem;
   text-align: left;

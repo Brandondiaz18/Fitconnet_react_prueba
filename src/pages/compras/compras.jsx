@@ -24,7 +24,7 @@ const Compras = () => {
   };
 
   return (
-    <div style={{
+    <div className="compras-page" style={{
       width: "100vw", 
       height: "100vh", 
       display: "flex",
@@ -33,7 +33,7 @@ const Compras = () => {
       overflow: "hidden"
     }}>
       {/* Panel Izquierdo */}
-      <div style={{
+      <div className="left-panel" style={{
         width: "60%",
         height: "100%",
         backgroundColor: "#f0f0f0"
@@ -50,7 +50,7 @@ const Compras = () => {
       </div>
 
       {/* Panel Derecho */}
-      <div style={{
+      <div className="right-panel" style={{
         width: "40%",
         height: "100%",
         backgroundColor: "#333333",
@@ -61,7 +61,7 @@ const Compras = () => {
         justifyContent: "center",
         color: "white"
       }}>
-        <div style={{
+        <div className="logo" style={{
           display: "flex",
           alignItems: "center",
           gap: "10px",
@@ -78,7 +78,7 @@ const Compras = () => {
           <h1 style={{fontSize: "2rem", fontWeight: "bold"}}>Fitconnet</h1>
         </div>
 
-        <div style={{
+        <div className="form-box" style={{
           backgroundColor: "white",
           color: "black",
           padding: "25px 20px",
@@ -97,7 +97,7 @@ const Compras = () => {
             <em>Comprar</em>
           </h2>
           <form onSubmit={handleSubmit}>
-            <div style={{
+            <div className="input-box" style={{
               backgroundColor: "black",
               color: "white",
               padding: "10px",
@@ -121,7 +121,7 @@ const Compras = () => {
               </select>
             </div>
 
-            <div style={{
+            <div className="input-box" style={{
               backgroundColor: "black",
               color: "white",
               padding: "10px",
@@ -142,7 +142,7 @@ const Compras = () => {
               />
             </div>
 
-            <div style={{
+            <div className="input-box" style={{
               backgroundColor: "black",
               color: "white",
               padding: "10px",
@@ -167,6 +167,7 @@ const Compras = () => {
 
             <button 
               type="submit" 
+              className="btn"
               style={{
                 backgroundColor: "purple",
                 color: "white",
@@ -181,9 +182,9 @@ const Compras = () => {
               Comprar
             </button>
           </form>
-          <p style={{marginTop: "15px"}}>
-            Pagas con: <strong>(COP)</strong>
-          </p>
+            <p className="footer" style={{marginTop: "15px"}}>
+              Pagas con: <strong>(COP)</strong>
+            </p>
         </div>
       </div>
     </div>

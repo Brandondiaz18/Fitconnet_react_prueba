@@ -1,13 +1,12 @@
-/* ===== ESTILO GENERAL ===== */
-body {
-  margin: 0;
+/* ===== Encapsulado Rutinas ===== */
+.rutinas-page {
   font-family: Arial, sans-serif;
   background-color: #1c1c1c;
   color: #fff;
 }
 
 /* ===== NAVBAR ===== */
-.navbar {
+.rutinas-page .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,25 +15,25 @@ body {
   border-bottom: 3px solid #800080;
 }
 
-.logo {
+.rutinas-page .logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.logo img {
+.rutinas-page .logo img {
   width: 55px;
   height: 55px;
   border-radius: 6px;
 }
 
-.logo h1 {
+.rutinas-page .logo h1 {
   color: #fff;
   font-size: 24px;
   margin: 0;
 }
 
-.navbar ul {
+.rutinas-page .navbar ul {
   list-style: none;
   display: flex;
   gap: 15px;
@@ -42,7 +41,7 @@ body {
   padding: 0;
 }
 
-.navbar a {
+.rutinas-page .navbar a {
   text-decoration: none;
   color: #fff;
   background-color: #800080;
@@ -51,37 +50,37 @@ body {
   transition: background 0.3s;
 }
 
-.navbar a:hover {
+.rutinas-page .navbar a:hover {
   background-color: #b100b1;
 }
 
 /* ===== CONTENIDO PRINCIPAL ===== */
-.main-content {
+.rutinas-page .main-content {
   text-align: center;
   padding: 40px 20px;
 }
 
-.main-content h2 {
+.rutinas-page .main-content h2 {
   font-size: 28px;
   margin-bottom: 10px;
   color: #d8b4ff;
 }
 
-.main-content p {
+.rutinas-page .main-content p {
   color: #ccc;
   max-width: 700px;
   margin: 0 auto 40px auto;
 }
 
 /* ===== TARJETAS DE RUTINAS ===== */
-.rutinas-container {
+.rutinas-page .rutinas-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 25px;
 }
 
-.rutina-card {
+.rutinas-page .rutina-card {
   background-color: #2a2a2a;
   border-radius: 12px;
   width: 300px;
@@ -90,12 +89,12 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.rutina-card:hover {
+.rutinas-page .rutina-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 0 25px rgba(128, 0, 128, 0.5);
 }
 
-.rutina-card img {
+.rutinas-page .rutina-card img {
   width: 100%;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -103,19 +102,19 @@ body {
   object-fit: cover;
 }
 
-.rutina-card h3 {
+.rutinas-page .rutina-card h3 {
   color: #d8b4ff;
   margin: 10px 0;
 }
 
-.rutina-card p {
+.rutinas-page .rutina-card p {
   color: #bbb;
   font-size: 14px;
   padding: 0 15px 15px 15px;
 }
 
 /* Botón */
-.btn {
+.rutinas-page .btn {
   display: inline-block;
   background-color: #800080;
   color: #fff;
@@ -126,12 +125,12 @@ body {
   transition: background 0.3s;
 }
 
-.btn:hover {
+.rutinas-page .btn:hover {
   background-color: #b100b1;
 }
 
 /* ===== FOOTER ===== */
-.footer {
+.rutinas-page .footer {
   text-align: center;
   background-color: #111;
   padding: 15px;

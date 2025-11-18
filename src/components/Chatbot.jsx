@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Chatbot({ open, onClose }) {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     { from: "bot", text: "¡Hola! Soy tu asistente FitConnet. ¿En qué te ayudo?" },
   ]);
@@ -15,7 +17,9 @@ export default function Chatbot({ open, onClose }) {
 
   if (!open) return null;
 
-  const reply = (text) => {
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+  const localFallback = (text) => {
     const t = text.toLowerCase();
     if (t.includes("plan") || t.includes("precio") || t.includes("comprar")) {
       return "Tenemos Plan 1 ($50k), Plan 2 ($275k), Plan 3 ($580k). Puedes verlos en 'Nuestros Planes' y comprar en Compras.";
@@ -24,25 +28,48 @@ export default function Chatbot({ open, onClose }) {
       return "Abrimos L-V 6:00–22:00, fines de semana 8:00–18:00.";
     }
     if (t.includes("dieta") || t.includes("aliment")) {
-      return "Ofrecemos dietas personalizadas en la sección Dietas. ¿Buscas definición, volumen o mantenimiento?";
+      return "Ofrecemos dietas personalizadas en la sección Dietas (definición, volumen, equilibrada). ¿Qué objetivo buscas?";
     }
-    if (t.includes("ejercicio") || t.includes("rutina")) {
+    if (t.includes("ejercicio") || t.includes("rutina") || t.includes("gimnasio") || t.includes("calistenia") || t.includes("casa")) {
       return "Tenemos rutinas para casa, gym y calistenia. Entra a 'Nuestros Servicios' para ver más.";
     }
     if (t.includes("contacto") || t.includes("correo") || t.includes("tel")) {
       return "Puedes escribir a contacto@fitconett.com o llamar +123 456 7890. También hay tarjetas en la sección Contacto.";
     }
-    return "Puedo ayudarte con planes, horarios, dietas, ejercicios o contacto. ¿Qué necesitas?";
+    if (t.includes("publicacion") || t.includes("feed")) {
+      return "La sección Publicaciones permite crear, ver, comentar y dar like a posts.";
+    }
+    if (t.includes("perfil") || t.includes("cuenta")) {
+      return "Gestiona tu perfil en la sección Perfil. Puedes editar datos personales y ajustes.";
+    }
+    return "Puedo ayudarte con planes, horarios, dietas, ejercicios, publicaciones, compras o contacto. ¿Qué necesitas?";
   };
 
-  const send = (e) => {
+  const smartReply = async (text) => {
+    try {
+      const res = await fetch(`${API_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, history: messages.map(m => ({ role: m.from === 'me' ? 'user' : 'assistant', content: m.text })) }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      return data; // { reply, suggestions, sources }
+    } catch (err) {
+      console.warn('Chat backend no disponible, usando fallback local:', err?.message || err);
+      return { reply: localFallback(text), suggestions: undefined };
+    }
+  };
+
+  const send = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
     const userMsg = { from: "me", text: input.trim() };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
-    const botMsg = { from: "bot", text: reply(userMsg.text) };
-    setTimeout(() => setMessages((prev) => [...prev, botMsg]), 400);
+    const data = await smartReply(userMsg.text);
+    const botMsg = { from: "bot", text: data.reply, suggestions: data.suggestions };
+    setMessages((prev) => [...prev, botMsg]);
   };
 
   return (
@@ -92,6 +119,15 @@ export default function Chatbot({ open, onClose }) {
                 boxShadow: "var(--shadow-xs)",
                 border: m.from === "me" ? "none" : "1px solid var(--color-border)",
               }}>{m.text}</div>
+              {m.from === 'bot' && Array.isArray(m.suggestions) && m.suggestions.length > 0 && (
+                <div className="chat-pill-group">
+                  {m.suggestions.map((s, idx) => (
+                    <button key={idx} className="chat-pill" onClick={() => navigate(s.route)}>
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           <div ref={bottomRef} />

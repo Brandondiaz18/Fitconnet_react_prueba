@@ -35,7 +35,7 @@ const PublicacionDetalle = () => {
   }, [id, post]);
 
   return (
-    <div>
+    <div className="publicaciones-page">
       {/* HEADER */}
       <header>
         <div className="logo">

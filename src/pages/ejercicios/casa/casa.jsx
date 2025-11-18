@@ -52,7 +52,7 @@ export default function Casa() {
   };
 
   return (
-    <div>
+    <div className="casa-page">
       {/* 🔹 NAVBAR */}
       <header className="navbar">
         <div className="logo">

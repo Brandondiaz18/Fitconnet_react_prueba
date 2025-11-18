@@ -179,3 +179,17 @@ p { line-height: 1.6; color: var(--color-text); }
   transition: background .2s ease, transform .1s ease;
 }
 .btn:hover { background: var(--color-primary-600); transform: translateY(-1px); }
+
+/* Chat: botones de acción tipo pill (igual al header de Gimnasio) */
+.chat-pill-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.chat-pill {
+  background-color: #8b00b2;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.chat-pill:hover { background-color: #b100e8; }

@@ -16,7 +16,11 @@ const Rutinas = () => {
             <li><a href="#">Nuestros Servicios</a></li>
             <li><a href="#">Nuestros Planes</a></li>
             <li><a href="#">Contacto</a></li>
-            <li><a href="#">Chat</a></li>
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); window.openFitChat?.(); }}>
+                Chat
+              </a>
+            </li>
             <li><a href="#">Perfil</a></li>
             <li><a href="#">Cerrar Sesión</a></li>
           </ul>
